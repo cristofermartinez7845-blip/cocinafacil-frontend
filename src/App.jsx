@@ -1,31 +1,27 @@
-import { useEffect, useState } from "react";
-import { fetchMock } from "./services/mock";
+import { useState } from "react";
+import Navbar from "./components/Navbar";
+import RecetaForm from "./components/RecetaForm";
+import CategoriaFiltro from "./components/CategoriaFiltro";
+import RecetaList from "./components/RecetaList";
 import "./App.css";
-import Navbar from "./componets/Navbar";
 
 function App() {
-  const [recetas, setRecetas] = useState([]);
-  const [cargando, setCargando] = useState(true);
-  const [error, setError] = useState(null);
+  const [categoria, setCategoria] = useState("");
+  const [recetasNuevas, setRecetasNuevas] = useState([]);
 
-  useEffect(() => {
-    fetchMock("recetas")
-      .then(setRecetas)
-      .catch((err) => setError(err.message))
-      .finally(() => setCargando(false));
-  }, []);
+  function agregarReceta(receta) {
+    setRecetasNuevas((prev) => [...prev, receta]);
+  }
 
-  if (cargando) return <p>Cargando recetas...</p>;
-  if (error) return <p>Error: {error}</p>;
-  
   return (
     <div>
       <Navbar />
-      <h1>CocinaFácil</h1>
-      <ul>
-        {recetas.map((r) => (
-          <li key={r.id}>{r.nombre} — {r.tiempo_preparacion} min</li>))}
-      </ul>
+
+      <RecetaForm onSubmit={agregarReceta} />
+
+      <h2>Recetas</h2>
+      <CategoriaFiltro value={categoria} onChange={setCategoria} />
+      <RecetaList categoriaFiltro={categoria} recetasNuevas={recetasNuevas} />
     </div>
   );
 }
