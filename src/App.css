@@ -1,82 +1,195 @@
-/* Contenedor principal de la aplicación */
-.app-container {
-  max-width: 750px;
-  margin: 0 auto;
-  padding: 20px 15px;
+/* App.css - Diseño limpio, ordenado y con buena separación */
+
+#root > div, main, .app-container {
+  max-width: 680px;
+  margin: 30px auto;
+  padding: 0 20px;
 }
 
-/* Título de la sección de recetas */
+/* Títulos de sección ("Nueva receta", "Recetas") */
 h2 {
+  font-size: 1.35rem;
+  color: #0f172a;
+  margin-bottom: 16px;
   text-align: center;
-  color: #374151;
-  font-size: 1.5rem;
-  margin-top: 30px;
-  margin-bottom: 15px;
 }
 
-/* Ajustes simples para el formulario */
+/* Caja del formulario */
 form {
   background-color: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 25px;
+  padding: 24px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  margin-bottom: 36px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  flex-direction: column;
+  gap: 14px;
 }
 
-form input, form select {
+/* Inputs del formulario */
+form input {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background-color: #f8fafc;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: #1e293b;
+  transition: all 0.2s;
+}
+
+form input:focus {
+  outline: none;
+  background-color: #ffffff;
+  border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.12);
+}
+
+/* Selectores (tanto el del formulario como el filtro de categorías) */
+select {
+  width: 100%;
+  height: 44px;
+  padding: 0 38px 0 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background-color: #ffffff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #1e293b;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23f97316' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  transition: all 0.2s;
+}
+
+select:focus {
+  outline: none;
+  border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.12);
+}
+
+/* Separación específica para el filtro de "Todas las categorías" */
+select:not(form select) {
+  margin-top: 4px;
+  margin-bottom: 24px;
+  border: 1.5px solid #e2e8f0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+select:not(form select):hover {
+  border-color: #f97316;
+}
+
+/* Botón naranja */
+form button,
+button {
+  width: 100%;
+  height: 44px;
+  background-color: #f97316;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: background-color 0.2s;
+}
+
+form button:hover,
+button:hover {
+  background-color: #ea580c;
+}
+
+/* Tarjetas de recetas más limpias y alineadas */
+article, .receta-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-left: 5px solid #f97316;
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin-bottom: 14px;
+  text-align: left;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+article:hover, .receta-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+}
+
+article h3, .receta-card h3 {
+  font-size: 1.15rem;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+/* Asegura que el tiempo y porciones queden alineados a la izquierda debajo del título */
+article p, .receta-card p {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin: 0;
+  text-align: left;
+}
+
+/* Mensajes de estado generales (Cargando, Error, Sin recetas) */
+main > p,
+.app-container > p,
+div > p:not(article p):not(.receta-card p) {
+  text-align: center;
+  padding: 16px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Sesión 14: formulario completo y mensajes */
+
+form textarea {
   padding: 8px 12px;
   border: 1px solid #d1d5db;
   border-radius: 6px;
   font-size: 0.95rem;
+  font-family: inherit;
 }
 
-form button {
-  background-color: #f97316;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
+form .campo-ancho {
+  width: 100%;
+  box-sizing: border-box;
 }
 
-form button:hover {
-  background-color: #ea580c;
-}
-
-/* Contenedor del filtro (por si tu CategoriaFiltro tiene un select) */
-.categoria-filtro, div select {
-  display: block;
-  margin: 0 auto 20px auto;
-  padding: 6px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-}
-
-/* Estilos básicos para las tarjetas de recetas */
-.receta-card, .receta-item {
-  background-color: #ffffff;
+.ingredientes-editor {
+  width: 100%;
+  box-sizing: border-box;
   border: 1px solid #e5e7eb;
-  border-left: 4px solid #f97316;
   border-radius: 6px;
-  padding: 15px;
-  margin-bottom: 12px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-.receta-card h3 {
-  margin: 0 0 5px 0;
-  color: #1f2937;
+.ingrediente-fila {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
-.receta-card p {
-  margin: 0;
-  color: #6b7280;
+form .boton-secundario {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+form .boton-secundario:hover {
+  background-color: #d1d5db;
+}
+
+.error-form {
+  width: 100%;
+  color: #b91c1c;
   font-size: 0.9rem;
 }
