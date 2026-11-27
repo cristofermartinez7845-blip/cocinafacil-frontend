@@ -3,25 +3,32 @@ import Navbar from "./components/Navbar";
 import RecetaForm from "./components/RecetaForm";
 import CategoriaFiltro from "./components/CategoriaFiltro";
 import RecetaList from "./components/RecetaList";
+import { useFetch } from "./hooks/useFetch";
+import { crearReceta } from "./services/api";
 import "./App.css";
 
 function App() {
   const [categoria, setCategoria] = useState("");
-  const [recetasNuevas, setRecetasNuevas] = useState([]);
+  // La lista de recetas se pide aquí, en un solo lugar, para poder recargarla
+  const { datos: recetas, cargando, error, recargar } = useFetch("recetas");
 
-  function agregarReceta(receta) {
-    setRecetasNuevas((prev) => [...prev, receta]);
+  async function guardarReceta(datos) {
+    await crearReceta(datos); // POST /api/recetas/
+    recargar(); // vuelve a pedir la lista para ver la receta nueva
   }
 
   return (
     <div>
       <Navbar />
-
-      <RecetaForm onSubmit={agregarReceta} />
-
+      <RecetaForm onGuardar={guardarReceta} />
       <h2>Recetas</h2>
       <CategoriaFiltro value={categoria} onChange={setCategoria} />
-      <RecetaList categoriaFiltro={categoria} recetasNuevas={recetasNuevas} />
+      <RecetaList
+        recetas={recetas}
+        cargando={cargando}
+        error={error}
+        categoriaFiltro={categoria}
+      />
     </div>
   );
 }

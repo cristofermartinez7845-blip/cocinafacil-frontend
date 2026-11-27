@@ -1,16 +1,13 @@
-import { useFetch } from "../hooks/useFetch";
 import RecetaCard from "./RecetaCard";
 
-function RecetaList({ categoriaFiltro, recetasNuevas = [] }) {
-  const { datos: recetas, cargando, error } = useFetch("recetas");
-
+// Componente de presentación: no pide datos, solo muestra lo que recibe por props.
+function RecetaList({ recetas, cargando, error, categoriaFiltro }) {
   if (cargando) return <p>Cargando recetas...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (error) return <p className="error-form">Error: {error}</p>;
 
-  const todas = [...recetas, ...recetasNuevas];
   const visibles = categoriaFiltro
-    ? todas.filter((r) => r.categoria === Number(categoriaFiltro))
-    : todas;
+    ? recetas.filter((r) => r.categoria === Number(categoriaFiltro))
+    : recetas;
 
   if (visibles.length === 0) return <p>No hay recetas en esta categoría.</p>;
 
